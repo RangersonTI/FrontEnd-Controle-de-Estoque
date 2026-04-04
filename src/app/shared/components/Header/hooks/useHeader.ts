@@ -8,7 +8,6 @@ import { routesConfig } from "../../../configs";
 export const useHeaderHook = () => {
 
     const {
-        tipoBotaoPressionado,
         setTipoBotaoPressionado,
         setPosicaoMenuExpansivo,
         setTipoMenuItemPressionado
@@ -25,26 +24,27 @@ export const useHeaderHook = () => {
     const buttonVisualizarRef = useRef<HTMLButtonElement>(null);
     const buttonMovimentacoesRef = useRef<HTMLButtonElement>(null);
 
-    const handleVerificaSeEhAcaoCadastro = () => {
-        return tipoBotaoPressionado === "cadastros";
-    }
+    // const ehAcaoCadastro = useMemo(
+    //     () => tipoBotaoPressionado === "cadastros"
+    //     ,[tipoBotaoPressionado]
+    // )
 
     const handleNavegar = (item: string) => {
         switch(item) {
             case EItensMenu.MARCA:
-                handleVerificaSeEhAcaoCadastro()// ai seta modal como aberta
+                //ehAcaoCadastro && abrir// ai seta modal como aberta
                 navigate(routesConfig.MARCAS);
                 break;
             case EItensMenu.PRODUTO:
-                handleVerificaSeEhAcaoCadastro()// ai seta modal como aberta
+                //handleVerificaSeEhAcaoCadastro()// ai seta modal como aberta
                 navigate(routesConfig.PRODUTOS);
                 break;
             case EItensMenu.TIPOPRODUTO:
-                handleVerificaSeEhAcaoCadastro()// ai seta modal como aberta
+                //handleVerificaSeEhAcaoCadastro()// ai seta modal como aberta
                 navigate(routesConfig.TIPOS_DE_PRODUTO);
                 break;
             case EItensMenu.UNIDADEMEDIDA:
-                handleVerificaSeEhAcaoCadastro()// ai seta modal como aberta
+                //handleVerificaSeEhAcaoCadastro()// ai seta modal como aberta
                 navigate(routesConfig.UNIDADES_DE_MEDIDA);
                 break;
             default:
@@ -83,9 +83,9 @@ export const useHeaderHook = () => {
         () => {
             setMenuItens([
                 "Marca",
-                "Produto",
                 "Tipo de Produto",
-                "Unidade de Medida"
+                "Unidade de Medida",
+                "Produto"
             ]);
         },[]
     );

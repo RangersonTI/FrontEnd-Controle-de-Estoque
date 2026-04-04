@@ -1,9 +1,18 @@
 import { Api } from "../../Api";
 import { ApiException } from "../../ApiException"
+import type { ITiposDeProdutoData } from "../../interfaces/TiposDeProduto";
+import type { IBodyCadastroTipoDeProdutoData } from "./Cadastrar";
 
-export const Editar = async() => {
+interface IBodyEdicaoTipoDeProdutoData 
+    extends IBodyCadastroTipoDeProdutoData {
+        CodTipoDeProduto: number;
+}
+
+export const Editar = async(body: IBodyEdicaoTipoDeProdutoData): Promise<ITiposDeProdutoData> => {
     try {
-        await Api.put(`/tipos-de-produto`);
+        const { data } = await Api.put(`/tipos-de-produto`, body);
+
+        return data;
     } 
     catch (error) {
         throw new ApiException(

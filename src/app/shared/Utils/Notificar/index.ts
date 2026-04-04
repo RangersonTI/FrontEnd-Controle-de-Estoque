@@ -8,6 +8,5 @@ const ErrorApi = (error: any) => {
 const Sucesso = (mensagem: string) => toast.success(mensagem);
 
 export const Notificar = {
-    ErrorApi,
-    Sucesso
+    ErrorApi,Sucesso
 }

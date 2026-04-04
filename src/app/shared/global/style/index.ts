@@ -50,7 +50,7 @@ export const GlobalStyle = createGlobalStyle`
         color: var(--fonte-padrao);
     }
 
-    input {
+    input,select {
         border: none;
         outline: none;
         color: var(--fonte-padrao);

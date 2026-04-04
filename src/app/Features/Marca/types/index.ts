@@ -1,2 +1,2 @@
 
-export type TModalsMarca = "CadastrarMarca" | "ConfirmarExclusaoMarca"
+export type TModalsMarca = "FormularioMarca" | "ConfirmarExclusaoMarca"

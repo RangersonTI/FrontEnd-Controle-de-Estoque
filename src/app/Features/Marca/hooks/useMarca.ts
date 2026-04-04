@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState, useTransition, type ChangeEvent } from "react";
 import { MarcasController } from "../../../shared/services/MarcasController";
 import type { TModalsMarca } from "../types";
-import { toast } from "react-toastify";
 import { Notificar } from "../../../shared/Utils/Notificar";
 import { useMarcaContext } from "../../../shared/hooks/useMarcaContext";
 import { useModalContext } from "../../../shared/hooks/useModalContext";
@@ -39,6 +38,11 @@ export const useMarca = () => {
     ] = useTransition();
 
     const [
+        estaDeletandoMarca,
+        delatarMarca
+    ] = useTransition();
+
+    const [
         filtro,
         setFiltro
     ] = useState("");
@@ -48,10 +52,16 @@ export const useMarca = () => {
         ,[marcaSelecionada]
     );
 
-    const handleFecharModalFormulario = () => {
+    const tituloModalFormularioMarca = useMemo(
+        () => marcaSelecionada.CodMarca ? "Edição de Marca" : "Cadastro de Marca"
+        ,[marcaSelecionada]
+    );
+
+    const handleFecharModal = () => {
         setMarcaSelecionada({} as IMarcasData);
         setFormularioMarca({} as IFormularioMarcaState);
-        fecharModal("CadastrarMarca");
+        fecharModal("FormularioMarca");
+        fecharModal("ConfirmarExclusaoMarca");
     }
 
     const handleChangeValue = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -76,34 +86,42 @@ export const useMarca = () => {
 
         if(marcaSelecionada.CodMarca)
             editarMarca(async() => {
+                try {
+                    const marcaEditada = await MarcasController.Editar({
+                        Descricao: descricao,
+                        CodMarca: marcaSelecionada.CodMarca
+                    });
+    
+                    setMarcas(p => p.map((marca) => {
+                        if(marca.CodMarca !== marcaEditada.CodMarca)
+                            return marca
+                        else
+                            return marcaEditada
+                    }))
+    
+                    Notificar.Sucesso("Marca editada com sucesso!");
+                    
+                    handleFecharModal();
+                } 
+                catch (error) {
+                    Notificar.ErrorApi(error);
+                }
                 
-                const marcaEditada = await MarcasController.Editar({
-                    Descricao: descricao
-                });
-
-                setMarcas(p => ([
-                    ...p.filter(m => m.CodMarca !== marcaSelecionada.CodMarca),
-                    marcaEditada
-                ]))
-
-                toast.success("Marca cadastrada com sucesso!");
-
-                fecharModal("CadastrarMarca");
             });
-        else
+            else
                 cadastrarMarca(async() => {
             try {
 
                 const marcaCadastrada = await MarcasController.Cadastrar({
                     Descricao: descricao
-                    });
-        
+                });
+                
                     setMarcas(p => ([...p, marcaCadastrada]));
-                    
-                    Notificar.Sucesso("Marca editar com sucesso!");
+                
+                    Notificar.Sucesso("Marca cadastrada com sucesso!");
 
-                    fecharModal("CadastrarMarca");
-                } 
+                    handleFecharModal();
+                }
                 catch (error) {
                     Notificar.ErrorApi(error);
                 }
@@ -113,22 +131,40 @@ export const useMarca = () => {
         setFormularioMarca({} as IFormularioMarcaState);
     }
 
+    const handleDeletarMarca = () => {
+        delatarMarca(async() => {
+            try {
+                await MarcasController.Deletar(marcaSelecionada.CodMarca);
+
+                Notificar.Sucesso("Marca deletada com sucesso!");
+
+                setMarcas(p => p.filter(m => m.CodMarca !== marcaSelecionada.CodMarca));
+
+                handleFecharModal();
+            } 
+            catch (error) {
+                Notificar.ErrorApi(error);
+            }
+        });
+    }
+
     const handleAcaoTabela = (dado: ObjetoMapeado, tipo: TTipoAcaoTabela) => {
-        
+
         const marca = dado as IMarcasData;
         setMarcaSelecionada(marca);
 
         switch(tipo) {
             case "editar":
-                abrirModal("CadastrarMarca");
+                abrirModal("FormularioMarca");
                 setFormularioMarca({
                     descricao: marca.Descricao
                 });
                 break;
             case "deletar":
+                abrirModal("ConfirmarExclusaoMarca");
                 break;
-            default: break;
-
+            default:
+                break;
         }
     }
 
@@ -144,14 +180,18 @@ export const useMarca = () => {
             setFiltro,
         },
         MEMO: {
-            descricaoBotaoFormularioMarca
+            descricaoBotaoFormularioMarca,
+            tituloModalFormularioMarca
         },
         TRANSITION: {
-            estaCadastrandoMarca
+            estaCadastrandoMarca,
+            estaEditandoMarca,
+            estaDeletandoMarca
         },
         handleChangeValue,
         handleCadastrarMarca,
-        handleFecharModalFormulario,
-        handleAcaoTabela
+        handleFecharModal,
+        handleAcaoTabela,
+        handleDeletarMarca
     };
 }

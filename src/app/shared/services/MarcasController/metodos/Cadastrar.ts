@@ -2,11 +2,11 @@ import { Api } from "../../Api";
 import { ApiException } from "../../ApiException"
 import type { IMarcasData } from "../../interfaces/Marcas";
 
-export interface IFormularioMarcaBodyData{
+export interface ICadastrarMarcaBodyData{
     Descricao: string;
 }
 
-export const Cadastrar = async(body: IFormularioMarcaBodyData): Promise<IMarcasData> => {
+export const Cadastrar = async(body: ICadastrarMarcaBodyData): Promise<IMarcasData> => {
     try {
         const { data } = await Api.post(`/marcas`, body);
 

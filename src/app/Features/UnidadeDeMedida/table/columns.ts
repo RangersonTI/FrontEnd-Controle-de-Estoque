@@ -17,4 +17,12 @@ export const TabelaUnidadesDeMedida: ITabelaPropriedadesProps[] = [
         chave: "QtdProdutoVinculado",
         valor: "Qtd.Produto/UnM"
     },
+    {
+        chave: "DataAlteracao",
+        valor: "Alterado Em:"
+    },
+    {
+        chave: "acoes",
+        valor: "Açoes"
+    }
 ];

@@ -16,7 +16,7 @@ export const Obter = async(query?: IObterUnidadesDeMedidaProps): Promise<IUnidad
         );
 
         return data;
-    } 
+    }
     catch (error) {
         throw new ApiException(
             error,

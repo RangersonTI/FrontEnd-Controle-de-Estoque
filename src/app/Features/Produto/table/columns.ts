@@ -29,4 +29,8 @@ export const TabelaProdutos: ITabelaPropriedadesProps[] = [
         chave: "",
         valor: "Movimentação"
     },
+    {
+        chave: "acoes",
+        valor: "Ações"
+    },
 ];

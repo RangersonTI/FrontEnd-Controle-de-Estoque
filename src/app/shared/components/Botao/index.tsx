@@ -7,6 +7,9 @@ interface IBotaoProps extends HTMLAttributes<HTMLButtonElement>{
     tipoBotao?: TTipoBotao;
     descricao?: string;
     isLoading?: boolean;
+    isDisabled?: boolean;
+    isFlex?: boolean;
+    corInversa?: boolean;
     Icone?: ElementType;
 }
 
@@ -15,13 +18,18 @@ export const Botao = ({
     Icone,
     descricao,
     isLoading = false,
+    isDisabled = false,
+    isFlex = false,
+    corInversa = false,
     ...rest
 }: IBotaoProps) => {
     return(
         <BotaoStyled
             $tipoBotao={tipoBotao}
             $isLoading={isLoading}
-            disabled={isLoading}
+            $isFlex={isFlex}
+            $corInversa={corInversa}
+            disabled={isDisabled}
             {...rest}
         >   
             {isLoading
@@ -29,7 +37,7 @@ export const Botao = ({
                     <Loading/>
                 :
                     <>
-                        { Icone && <Icone/> }
+                        { Icone && <Icone /> }
                         { descricao }
                     </>
             }

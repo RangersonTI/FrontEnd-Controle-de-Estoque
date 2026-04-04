@@ -11,6 +11,7 @@ import type { TModalsMarca } from "../types";
 import { ModalFormularioMarca } from "../components/ModalFormularioMarca";
 import { useMarcaContext } from "../../../shared/hooks/useMarcaContext";
 import { useModalContext } from "../../../shared/hooks/useModalContext";
+import { ModalConfirmarExclusaoMarca } from "../components/ModalConfirmarExclusaoMarca";
 
 export const Marca = () => {
 
@@ -43,7 +44,7 @@ export const Marca = () => {
                     <Botao
                         tipoBotao={"quadrado"}
                         Icone={IoAddOutline}
-                        onClick={() => abrirModal("CadastrarMarca")}
+                        onClick={() => abrirModal("FormularioMarca")}
                     />
                 </Agrupamento>
                 <Titulo descricao="Marcas" />
@@ -54,8 +55,12 @@ export const Marca = () => {
                 />
             </ContainerGlobal>
 
-            {modalAberta("CadastrarMarca") && (
+            {modalAberta("FormularioMarca") && (
                 <ModalFormularioMarca />
+            )}
+
+            {modalAberta("ConfirmarExclusaoMarca") && (
+                <ModalConfirmarExclusaoMarca />
             )}
         </>
     );

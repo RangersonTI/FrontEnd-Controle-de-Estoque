@@ -4,14 +4,16 @@ import type { TTipoBotao } from "./interface";
 interface IBotaoStyledProps {
     $tipoBotao?: TTipoBotao;
     $isLoading?: boolean;
+    $isFlex?: boolean;
+    $corInversa?: boolean;
 }
 
 export const BotaoStyled = styled.button<IBotaoStyledProps>`
     background-color: var(--marrom);
+    color: var(--beje);
     min-width: 36px;
     min-height: 36px;
     border-radius: 5px;
-    color: var(--beje);
     font-weight: 600;
     font-size: 1rem;
     display: flex;
@@ -30,6 +32,22 @@ export const BotaoStyled = styled.button<IBotaoStyledProps>`
 
     ${p => p.$isLoading && css`
         cursor: not-allowed;
+    `}
+
+    ${p => p.$isFlex && css`
+        width: 100%;
+    `}
+
+    ${p => p.$corInversa && css`
+        background-color: var(--beje);
+        border: 1px solid var(--marrom);
+        color: var(--marrom);
+        
+        &:hover {
+            background-color: transparent !important;
+            box-shadow: 0 0 5px var(--marrom-escuro);
+            color: var(--marrom-escuro);
+        }
     `}
 
     svg {

@@ -1,9 +1,13 @@
 import { Api } from "../../Api";
 import { ApiException } from "../../ApiException"
 import type { IMarcasData } from "../../interfaces/Marcas";
-import type { IFormularioMarcaBodyData } from "./Cadastrar";
+import type { ICadastrarMarcaBodyData } from "./Cadastrar";
 
-export const Editar = async(body: IFormularioMarcaBodyData): Promise<IMarcasData> => {
+interface IEditarMarcaBodyData extends ICadastrarMarcaBodyData {
+    CodMarca: number;
+}
+
+export const Editar = async(body: IEditarMarcaBodyData): Promise<IMarcasData> => {
     try {
         const { data } = await Api.put(`/marcas`, body);
 

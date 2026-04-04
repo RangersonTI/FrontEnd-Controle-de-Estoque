@@ -1,14 +1,16 @@
 import { Api } from "../../Api";
-import { ApiException } from "../../ApiException"
+import { ApiException } from "../../ApiException";
 
-export const Deletar = async() => {
+export const Deletar = async(CodTipoDeProduto: number) => {
     try {
-        await Api.delete(`/tipos-de-produto`);
+        await Api.delete(`/tipos-de-produto`, {
+            params: { CodTipoDeProduto }
+        });
     } 
     catch (error) {
         throw new ApiException(
             error,
-            "Não foi possível deletar esta marca!"
+            "Não foi possível deletar este tipo de produto!"
         );    
     }
 }

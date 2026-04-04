@@ -16,6 +16,7 @@ export class ApiException {
                 response?.status === 400 ||
                 response?.status === 403 ||
                 response?.status === 404 ||
+                response?.status === 409 ||
                 response?.status === 500
             ) {
                 this.status = response.status;

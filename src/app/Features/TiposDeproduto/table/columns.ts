@@ -10,11 +10,15 @@ export const TabelaTiposDeProduto: ITabelaPropriedadesProps[] = [
         valor: "Descricao"
     },
     {
-        chave: "DataUltimaAlteracao",
+        chave: "DataAlteracao",
         valor: "Alterado Em"
     },
     {
         chave: "QtdProdutosVinculado",
         valor: "Qtd. Produtos Vinculado"
+    },
+    {
+        chave: "acoes",
+        valor: "Acões"
     },
 ];

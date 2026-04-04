@@ -7,34 +7,56 @@ import { Titulo } from "../../../shared/components/Titulo";
 import { useUnidadeDeMedida } from "../hook/useUnidadeDeMedida";
 import { Tabela } from "../../../shared/components/Tabela";
 import { TabelaUnidadesDeMedida } from "../table/columns";
+import { useModalContext } from "../../../shared/hooks/useModalContext";
+import type { TModalFormularioUnMedida } from "../types";
+import { ModalFormularioUnMedida } from "../components/ModalFormularioUnMedida";
+import { ModalConfirmarExclusaoUnMedida } from "../components/ModalConfirmarExclusaoUnMedida";
 
 export const UnidadeDeMedida = () => {
 
     const {
         STATE,
-        handleChangeValue
+        handleChangeValue,
+        handleAcaoDaTabela
     } = useUnidadeDeMedida();
 
-    return(
-        <ContainerGlobal>
-            <Agrupamento>
-                 <Input
-                    onChange={handleChangeValue}
-                    value={STATE.filtro}
-                    name="filtro"
-                    label="Filtro Geral"
-                />
+    const {
+        abrirModal,
+        modalAberta
+    } = useModalContext<TModalFormularioUnMedida>();
 
-                <Botao
-                    tipoBotao={"quadrado"}
-                    Icone={IoAddOutline}
+    return(
+        <>
+            <ContainerGlobal>
+                <Agrupamento>
+                    <Input
+                        onChange={handleChangeValue}
+                        value={STATE.filtro}
+                        name="filtro"
+                        label="Filtro Geral"
+                    />
+
+                    <Botao
+                        tipoBotao={"quadrado"}
+                        Icone={IoAddOutline}
+                        onClick={() => abrirModal("FormularioUnMedida")}
+                    />
+                </Agrupamento>
+                <Titulo descricao="Unidades de Medida"/>
+                <Tabela
+                    dados={STATE.unidadesDeMedida}
+                    tabelaProps={TabelaUnidadesDeMedida}
+                    acaoDaTabela={handleAcaoDaTabela}
                 />
-            </Agrupamento>
-            <Titulo descricao="Unidades de Medida"/>
-            <Tabela
-                dados={STATE.unidadesDeMedida}
-                tabelaProps={TabelaUnidadesDeMedida}
-            />
-        </ContainerGlobal>
+            </ContainerGlobal>
+
+            {modalAberta("FormularioUnMedida") &&
+                <ModalFormularioUnMedida />
+            }
+
+            {modalAberta("ConfirmaExclusaoUnMedida") &&
+                <ModalConfirmarExclusaoUnMedida />
+            }
+        </>
     );
 }

@@ -2,6 +2,7 @@ import { createContext, useState, type ReactNode } from "react";
 import type { IMarcasData } from "../../services/interfaces/Marcas";
 import type { IFormularioMarcaState } from "./interface";
 import { MarcasController } from "../../services/MarcasController";
+import { Notificar } from "../../Utils/Notificar";
 
 interface IMarcaProviderProps {
     children: ReactNode;
@@ -54,7 +55,7 @@ function MarcasProvider({
             setMarcas(marcas);
         } 
         catch (error) {
-
+            Notificar.ErrorApi(error);
         }
     }
 

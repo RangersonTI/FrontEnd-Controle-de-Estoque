@@ -15,14 +15,14 @@ export const ModalFormularioMarca = () => {
         MEMO,
         handleChangeValue,
         handleCadastrarMarca,
-        handleFecharModalFormulario
+        handleFecharModal
     } = useMarca();
 
     return(
         <Modal.Root>
             <Modal.Header
-                fechar={handleFecharModalFormulario}
-                titulo="Cadastro de Marca"
+                fechar={handleFecharModal}
+                titulo={MEMO.tituloModalFormularioMarca}
             />
             <Modal.Container
                 gapEntreItens="2rem"
@@ -36,7 +36,8 @@ export const ModalFormularioMarca = () => {
                 />
 
                 <Botao
-                    isLoading={TRANSITION.estaCadastrandoMarca}
+                    isLoading={TRANSITION.estaCadastrandoMarca || TRANSITION.estaEditandoMarca}
+                    isDisabled={TRANSITION.estaCadastrandoMarca || TRANSITION.estaEditandoMarca}
                     descricao={MEMO.descricaoBotaoFormularioMarca}
                     onClick={handleCadastrarMarca}
                 />
