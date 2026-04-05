@@ -46,7 +46,7 @@ export const ContainerModalStyle = styled.div<IContainerModalStyleProps>`
     padding: 2rem 1rem;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 25px;
 
     ${containerFlexInCollumn}
 

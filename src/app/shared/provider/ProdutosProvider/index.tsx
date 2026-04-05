@@ -1,6 +1,8 @@
 import { createContext, useState, type ReactNode } from "react";
 import type { IProdutosData } from "../../services/interfaces/Produtos";
 import type { IFormularioProduto } from "./interfaces";
+import { ProdutosController } from "../../services/ProdutosController";
+import { Notificar } from "../../Utils/Notificar";
 
 export interface IProdutosProviderProps {
     children: ReactNode;
@@ -21,6 +23,8 @@ export interface IProdutosContextData {
     setProdutoSelecionado: React.Dispatch<
         React.SetStateAction<IProdutosData>
     >;
+
+    handleObterProdutosCadastrados: () => Promise<void>;
 }
 
 const ProdutosContext = createContext({} as IProdutosContextData);
@@ -44,6 +48,17 @@ function ProdutosProvider({
         setProdutoSelecionado,
     ] = useState({} as IProdutosData);
 
+    const handleObterProdutosCadastrados = async() => {
+        try {
+            const produtos = await ProdutosController.Obter();
+
+            setProdutos(produtos);
+        }
+        catch (error) {
+            Notificar.ErrorApi(error);
+        }
+    }
+
     return(
         <ProdutosContext
             value={{
@@ -55,6 +70,8 @@ function ProdutosProvider({
 
                 produtoSelecionado,
                 setProdutoSelecionado,
+
+                handleObterProdutosCadastrados,
             }}
         >
             { children }

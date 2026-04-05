@@ -33,23 +33,26 @@ export const ModalFormularioProduto = () => {
                     onChange={handleChangeValue}
                     value={formularioProduto.descricao}
                     autoFocus
-                />
+                    />
 
                 <Select
                     name="codMarca"
+                    label="Marca"
                     onChange={handleChangeValue}
                     opcoes={MEMO.marcaFormatoSelect}
                     value={formularioProduto.codMarca}
-                />
+                    />
 
                 <Select
                     name="codTipoProduto"
+                    label="Tipo de Produto"
                     onChange={handleChangeValue}
                     opcoes={MEMO.tipoDeProdutoFormatoSelect}
                     value={formularioProduto.codTipoProduto}
                 />
 
                 <Select
+                    label="Unidade de Medida"
                     name="codUnidadeDeMedida"
                     onChange={handleChangeValue}
                     opcoes={MEMO.unidadesDeMedidaFormatoSelect}

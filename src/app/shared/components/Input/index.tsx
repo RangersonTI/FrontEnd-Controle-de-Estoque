@@ -1,10 +1,11 @@
-import type { ChangeEvent, HTMLAttributes } from "react";
+import type { ChangeEvent, HTMLAttributes, HTMLInputTypeAttribute } from "react";
 import { ContainerInput, InputStyled, LabelFlutuante } from "./style";
 import { useInput } from "./hook";
 
 interface IInputProps extends HTMLAttributes<HTMLInputElement> {
     label?: string;
-    value: string;
+    type?: HTMLInputTypeAttribute;
+    value: string | number;
     name: string;
     onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
@@ -24,7 +25,7 @@ export const Input = ({
 
     return(
         <ContainerInput
-            $labelSuspensa={STATE.inputEstaFocada || handleValueEhValido(value)}
+            $labelSuspensa={STATE.inputEstaFocada || handleValueEhValido(String(value))}
         >
             <InputStyled
                 onBlur={() => STATE.setInputEstaFocada(false)}

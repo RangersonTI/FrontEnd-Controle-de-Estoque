@@ -26,7 +26,7 @@ export const SelectStyled = styled.select`
     background-color: var(--beje);
     border: 2px solid var(--marrom);
     border-radius: 5px;
-    padding-left: 15px;
+    padding-left: 10px;
     font-weight: 500;
     font-family: var(--inter);
 `;

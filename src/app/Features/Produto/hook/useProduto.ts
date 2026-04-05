@@ -24,6 +24,7 @@ export const useProduto = () => {
 
         produtoSelecionado,
         setProdutoSelecionado,
+        handleObterProdutosCadastrados
     } = useProdutosContext();
 
     const {
@@ -197,16 +198,7 @@ export const useProduto = () => {
         }
     }
 
-    const handleObterProdutosCadastrados = async() => {
-        try {
-            const produtos = await ProdutosController.Obter();
-
-            setProdutos(produtos);
-        }
-        catch (error) {
-            Notificar.ErrorApi(error);
-        }
-    }
+    
 
     useEffect(
         () => {
