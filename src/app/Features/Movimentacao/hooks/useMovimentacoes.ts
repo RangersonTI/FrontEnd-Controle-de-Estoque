@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, type ChangeEvent } from "react";
+import { useEffect, useMemo, useState, useTransition, type ChangeEvent } from "react";
 import { useModalContext } from "../../../shared/hooks/useModalContext";
 import type { TModalMovimentacao } from "../types";
 import { useMovimentacoesContext } from "../../../shared/hooks/useMovimentacoesContext";
@@ -7,10 +7,13 @@ import type { ISelectFormatProps } from "../../../shared/types";
 import { ETiposDeMovimentacao } from "../../../shared/provider/MovimentacoesProvider/enum";
 import { DADOS_INICIAIS_FORMULARIO_MOVIMENTACAO } from "../../../shared/provider/MovimentacoesProvider";
 import { Formatar } from "../../../shared/Utils/Formatar";
+import { Notificar } from "../../../shared/Utils/Notificar";
+import { MovimentacoesController } from "../../../shared/services/MovimentacoesController";
 
 export const useMovimentacoes = () => {
     
     const {
+        formularioMovimentacao,
         setFormularioMovimentacao,
     } = useMovimentacoesContext();
 
@@ -18,15 +21,21 @@ export const useMovimentacoes = () => {
         handleObterProdutosCadastrados,
         produtos
     } = useProdutosContext();
+    
+    const {
+        fecharModal
+    } = useModalContext<TModalMovimentacao>();
 
     const [
         filtro,
         setFiltro,
     ] = useState("");
 
-    const {
-        fecharModal
-    } = useModalContext<TModalMovimentacao>();
+    const [
+        estaRealizandoMovimentacao,
+        realizarMovimentacao
+    ] = useTransition();
+
 
     const handleFecharFormulario = () => {
         fecharModal("FormularioMovimentacao");
@@ -77,6 +86,43 @@ export const useMovimentacoes = () => {
         }));
     }
 
+    const handleRealizarMovimentacaoEstoque = async() => {
+
+        const {
+            codMovimentacaoEntrada,
+            codProd,
+            dataArmazenagem,
+            dataSaida,
+            observacao,
+            qtdAMovimentar,
+            tipoMovimentacao
+        } = formularioMovimentacao;
+
+        realizarMovimentacao(
+            async() => {
+
+                try {
+                    await MovimentacoesController.Cadastrar({
+                        CodMovimentacaoEntrada: codMovimentacaoEntrada,
+                        CodProd: codProd,
+                        DataArmazenagem: dataArmazenagem,
+                        DataSaida: dataSaida,
+                        Observacao: observacao,
+                        QtdAMovimentar: qtdAMovimentar,
+                        TipoMovimentacao: tipoMovimentacao
+                    });
+
+                    handleFecharFormulario();
+
+                    Notificar.Sucesso("Movimentação criada com sucesso!");
+                }
+                catch (error) {
+                    Notificar.ErrorApi(error);    
+                }
+            }
+        );
+    }
+
     useEffect(
         () => {
             handleObterProdutosCadastrados();
@@ -92,7 +138,11 @@ export const useMovimentacoes = () => {
             produtosSelectFormat,
             tiposMovimentacaoSelectFormat
         },
+        TRANSITION: {
+            estaRealizandoMovimentacao
+        },
         handleChangeValues,
-        handleFecharFormulario
+        handleFecharFormulario,
+        handleRealizarMovimentacaoEstoque
     };
 }

@@ -1,4 +1,5 @@
 import { Agrupamento } from "../../../../shared/components/Agrupamento";
+import { Botao } from "../../../../shared/components/Botao";
 import { Input } from "../../../../shared/components/Input";
 import { Modal } from "../../../../shared/components/Modal";
 import { Select } from "../../../../shared/components/Select";
@@ -16,8 +17,10 @@ export const ModalFormularioMovimentacao = () => {
 
     const {
         MEMO,
+        TRANSITION,
         handleChangeValues,
-        handleFecharFormulario
+        handleFecharFormulario,
+        handleRealizarMovimentacaoEstoque
     } = useMovimentacoes();
 
     return(
@@ -79,6 +82,13 @@ export const ModalFormularioMovimentacao = () => {
                         label="Observação"
                         onChange={handleChangeValues}
                         value={formularioMovimentacao.observacao}
+                    />
+
+                    <Botao
+                        descricao="Salvar Movimentação"
+                        onClick={handleRealizarMovimentacaoEstoque}
+                        isLoading={TRANSITION.estaRealizandoMovimentacao}
+                        isDisabled={TRANSITION.estaRealizandoMovimentacao}
                     />
                 </ContainerMovimentacao>
             </Modal.Container>
