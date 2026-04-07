@@ -77,8 +77,18 @@ export const ModalFormularioMovimentacao = () => {
                         />
                     }
 
+                    {formularioMovimentacao.tipoMovimentacao === 2 &&
+                        <Select
+                            name="codProd"
+                            label="Movimentação Entrada Ref."
+                            opcoes={MEMO.movimentacoesEntradaSelectFormat}
+                            onChange={handleChangeValues}
+                            value={formularioMovimentacao.codProd ?? ""}
+                        />
+                    }
+
                     <Input
-                        name=""
+                        name="observacao"
                         label="Observação"
                         onChange={handleChangeValues}
                         value={formularioMovimentacao.observacao}

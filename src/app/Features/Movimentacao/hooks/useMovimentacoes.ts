@@ -9,12 +9,14 @@ import { DADOS_INICIAIS_FORMULARIO_MOVIMENTACAO } from "../../../shared/provider
 import { Formatar } from "../../../shared/Utils/Formatar";
 import { Notificar } from "../../../shared/Utils/Notificar";
 import { MovimentacoesController } from "../../../shared/services/MovimentacoesController";
+import type { IMovimentacoesEntradaEmAbertoData } from "../../../shared/services/MovimentacoesController/metodos/ObterMovimentacoesEntradaEmAberto";
 
 export const useMovimentacoes = () => {
     
     const {
         formularioMovimentacao,
         setFormularioMovimentacao,
+        setMovimentacoesEstoque
     } = useMovimentacoesContext();
 
     const {
@@ -30,6 +32,11 @@ export const useMovimentacoes = () => {
         filtro,
         setFiltro,
     ] = useState("");
+
+    const [
+        movimentacoesEntradaEmAberto,
+        setMovimentacoesEntradaEmAberto,
+    ] = useState<IMovimentacoesEntradaEmAbertoData[]>([]);
 
     const [
         estaRealizandoMovimentacao,
@@ -57,6 +64,18 @@ export const useMovimentacoes = () => {
         () => produtos.map(p => (
             {chave: p.Descricao, valor: String(p.CodProd)}
         )) ,[produtos]
+    );
+
+    const movimentacoesEntradaSelectFormat: ISelectFormatProps[] = useMemo(
+        () => movimentacoesEntradaEmAberto.map((mov) => (
+            {
+                chave: `Cód.${mov.CodMovimentacao} - Armazenado: ${mov.DataArmazenagem} - Qtd.Restante:${mov.QtdRestante}`,
+                valor: mov.CodMovimentacao.toString()
+            } as ISelectFormatProps
+        ))
+        ,[
+            movimentacoesEntradaEmAberto
+        ]
     );
 
     const handleChangeValues = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -104,7 +123,7 @@ export const useMovimentacoes = () => {
                 try {
                     await MovimentacoesController.Cadastrar({
                         CodMovimentacaoEntrada: codMovimentacaoEntrada,
-                        CodProd: codProd,
+                        CodProd: Number(codProd),
                         DataArmazenagem: dataArmazenagem,
                         DataSaida: dataSaida,
                         Observacao: observacao,
@@ -123,10 +142,49 @@ export const useMovimentacoes = () => {
         );
     }
 
+    const handleObterMovimentacoesRealizadas = async() => {
+        try {
+            const movimentacoes = await MovimentacoesController.Obter();
+
+            setMovimentacoesEstoque(movimentacoes);
+        }
+        catch (error) {
+            Notificar.ErrorApi(error);    
+        }
+    }
+
+    const handleObterMoviventacoesDeEntradaEmAberto = async() => {
+
+        try {
+            const movimentacoes = await MovimentacoesController.ObterMovimentacoesEntradaEmAberto(
+                Number(formularioMovimentacao.codProd)
+            );
+
+            setMovimentacoesEntradaEmAberto(movimentacoes);
+        }
+        catch (error) {
+            Notificar.ErrorApi(error);
+        }
+    }
+
     useEffect(
         () => {
             handleObterProdutosCadastrados();
+            handleObterMovimentacoesRealizadas();
         },[]
+    );
+
+    useEffect(
+        () => {
+            if(
+                formularioMovimentacao.codProd &&
+                formularioMovimentacao.tipoMovimentacao === 2
+            )
+                handleObterMoviventacoesDeEntradaEmAberto();
+        },[
+            formularioMovimentacao.codProd,
+            formularioMovimentacao.tipoMovimentacao
+        ]
     );
 
     return {
@@ -136,13 +194,16 @@ export const useMovimentacoes = () => {
         },
         MEMO: {
             produtosSelectFormat,
-            tiposMovimentacaoSelectFormat
+            tiposMovimentacaoSelectFormat,
+            movimentacoesEntradaSelectFormat
         },
         TRANSITION: {
             estaRealizandoMovimentacao
         },
         handleChangeValues,
         handleFecharFormulario,
-        handleRealizarMovimentacaoEstoque
+        handleRealizarMovimentacaoEstoque,
+        handleObterMovimentacoesRealizadas,
+        handleObterMoviventacoesDeEntradaEmAberto
     };
 }

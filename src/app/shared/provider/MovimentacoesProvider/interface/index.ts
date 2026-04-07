@@ -1,7 +1,7 @@
 import type { ETiposDeMovimentacao } from "../enum";
 
 export interface IFormularioMovimentacao {
-    codProd: number;
+    codProd: string;
     tipoMovimentacao: ETiposDeMovimentacao;
     codMovimentacaoEntrada: number | null;
     qtdAMovimentar: number;

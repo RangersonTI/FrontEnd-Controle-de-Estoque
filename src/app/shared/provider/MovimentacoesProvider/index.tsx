@@ -1,6 +1,7 @@
 import { createContext, useState, type ReactNode } from "react";
 import type { IFormularioMovimentacao } from "./interface";
 import { Obter } from "../../Utils/Obter";
+import type { IMovimentacoesEstoqueData } from "../../services/MovimentacoesController/metodos/Obter";
 
 interface IMovimentacoesProviderProps {
     children: ReactNode;
@@ -11,13 +12,18 @@ interface IMovimentacoesContextData {
     setFormularioMovimentacao: React.Dispatch<
         React.SetStateAction<IFormularioMovimentacao>
     >;
+
+    movimentacoesEstoque: IMovimentacoesEstoqueData[];
+    setMovimentacoesEstoque: React.Dispatch<
+        React.SetStateAction<IMovimentacoesEstoqueData[]>
+    >;
 }
 
 const MovimentacoesContext = createContext({} as IMovimentacoesContextData);
 
 const DADOS_INICIAIS_FORMULARIO_MOVIMENTACAO:IFormularioMovimentacao = {
     codMovimentacaoEntrada: null,
-    codProd: 0,
+    codProd: "",
     dataArmazenagem: Obter.dataAtual(),
     dataSaida: Obter.dataAtual(),
     observacao: "",
@@ -30,17 +36,23 @@ function MovimentacoesProvider({
 }: IMovimentacoesProviderProps) {
 
     const [
+        movimentacoesEstoque,
+        setMovimentacoesEstoque,
+    ] = useState<IMovimentacoesEstoqueData[]>([]);
+
+    const [
         formularioMovimentacao,
         setFormularioMovimentacao
     ] = useState<IFormularioMovimentacao>(DADOS_INICIAIS_FORMULARIO_MOVIMENTACAO);
-
-    console.log(Obter.dataAtual(),)
 
     return (
         <MovimentacoesContext
             value={{
                 formularioMovimentacao,
                 setFormularioMovimentacao,
+
+                movimentacoesEstoque,
+                setMovimentacoesEstoque,
             }}
         >
             { children }

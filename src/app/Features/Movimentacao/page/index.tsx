@@ -7,8 +7,15 @@ import { useMovimentacoes } from "../hooks/useMovimentacoes";
 import { useModalContext } from "../../../shared/hooks/useModalContext";
 import type { TModalMovimentacao } from "../types";
 import { ModalFormularioMovimentacao } from "../components/ModalFormularioMovimentacao";
+import { Tabela } from "../../../shared/components/Tabela";
+import { TabelaMovimentacoes } from "../table/columns";
+import { useMovimentacoesContext } from "../../../shared/hooks/useMovimentacoesContext";
 
 export const Movimentacao = () => {
+
+    const {
+        movimentacoesEstoque
+    } = useMovimentacoesContext();
 
     const {
         STATE,
@@ -36,6 +43,12 @@ export const Movimentacao = () => {
                         onClick={() => abrirModal("FormularioMovimentacao")}
                     />
                 </Agrupamento>
+
+                <Tabela
+                    acaoDaTabela={()=>{}}
+                    dados={movimentacoesEstoque}
+                    tabelaProps={TabelaMovimentacoes}
+                />
             </ContainerGlobal>
 
             {modalAberta("FormularioMovimentacao") && <ModalFormularioMovimentacao/>}
