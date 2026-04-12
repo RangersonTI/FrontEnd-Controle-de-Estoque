@@ -30,7 +30,9 @@ export const Tabela = ({
                 {dados.map((dado) => (
                     <Trow>
                         {tabelaProps.map((row) => (
-                            <Td>
+                            <Td 
+                                $alinhamento={row.propriedades?.alinhamento}
+                            >
                                 {row.chave === "acoes"
                                     ?
                                         <AgrupamentoAcoes>
@@ -45,7 +47,7 @@ export const Tabela = ({
                                             />
                                         </AgrupamentoAcoes>
                                     :
-                                        dado[row.chave]
+                                        dado[row.chave] ?? "-"
                                 }
                             </Td>
                         ))}

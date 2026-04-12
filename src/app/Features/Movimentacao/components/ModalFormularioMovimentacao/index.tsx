@@ -79,11 +79,11 @@ export const ModalFormularioMovimentacao = () => {
 
                     {formularioMovimentacao.tipoMovimentacao === 2 &&
                         <Select
-                            name="codProd"
+                            name="codMovimentacaoEntrada"
                             label="Movimentação Entrada Ref."
                             opcoes={MEMO.movimentacoesEntradaSelectFormat}
                             onChange={handleChangeValues}
-                            value={formularioMovimentacao.codProd ?? ""}
+                            value={formularioMovimentacao.codMovimentacaoEntrada ?? ""}
                         />
                     }
 

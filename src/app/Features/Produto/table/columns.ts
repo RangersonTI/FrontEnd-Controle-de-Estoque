@@ -7,7 +7,10 @@ export const TabelaProdutos: ITabelaPropriedadesProps[] = [
     },
     {
         chave: "Descricao",
-        valor: "Descrição"
+        valor: "Descrição",
+        propriedades: {
+            alinhamento: "left"
+        }
     },
     {
         chave: "UnidadeDeMedida",
@@ -15,11 +18,17 @@ export const TabelaProdutos: ITabelaPropriedadesProps[] = [
     },
     {
         chave: "TipoProduto",
-        valor: "Tipo Produto"
+        valor: "Tipo Produto",
+        propriedades: {
+            alinhamento: "left"
+        }
     },
     {
         chave: "Marca",
-        valor: "Marca"
+        valor: "Marca",
+        propriedades: {
+            alinhamento: "left"
+        }
     },
     {
         chave: "",

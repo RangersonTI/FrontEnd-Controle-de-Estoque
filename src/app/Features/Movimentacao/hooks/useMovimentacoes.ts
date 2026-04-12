@@ -122,7 +122,7 @@ export const useMovimentacoes = () => {
 
                 try {
                     await MovimentacoesController.Cadastrar({
-                        CodMovimentacaoEntrada: codMovimentacaoEntrada,
+                        CodMovimentacaoEntrada: Number(codMovimentacaoEntrada),
                         CodProd: Number(codProd),
                         DataArmazenagem: dataArmazenagem,
                         DataSaida: dataSaida,
@@ -134,6 +134,8 @@ export const useMovimentacoes = () => {
                     handleFecharFormulario();
 
                     Notificar.Sucesso("Movimentação criada com sucesso!");
+
+                    handleObterMovimentacoesRealizadas();
                 }
                 catch (error) {
                     Notificar.ErrorApi(error);    

@@ -7,7 +7,10 @@ export const TabelaTiposDeProduto: ITabelaPropriedadesProps[] = [
     },
     {
         chave: "Descricao",
-        valor: "Descricao"
+        valor: "Descricao",
+        propriedades: {
+            alinhamento: "left"
+        }
     },
     {
         chave: "DataAlteracao",

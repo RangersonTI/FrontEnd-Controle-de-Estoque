@@ -22,7 +22,7 @@ interface IMovimentacoesContextData {
 const MovimentacoesContext = createContext({} as IMovimentacoesContextData);
 
 const DADOS_INICIAIS_FORMULARIO_MOVIMENTACAO:IFormularioMovimentacao = {
-    codMovimentacaoEntrada: null,
+    codMovimentacaoEntrada: "",
     codProd: "",
     dataArmazenagem: Obter.dataAtual(),
     dataSaida: Obter.dataAtual(),

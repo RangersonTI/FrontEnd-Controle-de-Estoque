@@ -7,7 +7,10 @@ export const TabelaMarcas: ITabelaPropriedadesProps[] = [
     },
     {
         chave: "Descricao",
-        valor: "Descrição"
+        valor: "Descrição",
+        propriedades: {
+            alinhamento: "left"
+        }
     },
     {
         chave: "DataUltimaAlteracao",

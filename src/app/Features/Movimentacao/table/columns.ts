@@ -7,11 +7,17 @@ export const TabelaMovimentacoes: ITabelaPropriedadesProps[] = [
     },
     {
         valor: "Produto",
-        chave: "Produto"
+        chave: "Produto",
+        propriedades: {
+            alinhamento: "left"
+        }
     },
     {
         valor: "T. Movimentação",
-        chave: "TipoMovimentacao"
+        chave: "TipoMovimentacao",
+        propriedades: {
+            alinhamento: "left"
+        }
     },
     {
         valor: "Data Movimentado",
@@ -26,7 +32,7 @@ export const TabelaMovimentacoes: ITabelaPropriedadesProps[] = [
         chave: "DataSaida"
     },
     {
-        valor: "Qtd.Entrada",
+        valor: "Qtd.Movimetado",
         chave: "QtdMovimentacao"
     },
     {

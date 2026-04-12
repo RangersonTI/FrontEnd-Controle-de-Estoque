@@ -1,6 +1,10 @@
 import styled from "styled-components";
 import { containerFlexInRowCenter } from "../../global/style/mixins";
 
+interface ITdProps {
+    $alinhamento?: "left" | "right" | "center"
+}
+
 export const TabelaStyle = styled.table`
     width: 100%;
     background-color: var(--beje);
@@ -9,10 +13,10 @@ export const TabelaStyle = styled.table`
     border-radius: 3px;
 `;
 
-export const Td = styled.td`
+export const Td = styled.td<ITdProps>`
     color: var(--marrom);
     font-weight: 600;
-    text-align: center;
+    text-align: ${p => p.$alinhamento ?? "center"};
 `
 
 export const Trow = styled.tr`
