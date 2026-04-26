@@ -52,6 +52,7 @@ export const TiposDeproduto = () => {
                     dados={tiposDeProduto}
                     tabelaProps={TabelaTiposDeProduto}
                     acaoDaTabela={handleAcaoDaTabela}
+                    chaveLinhaSelecionado="CodTipoProduto"
                 />
             </ContainerGlobal>
 

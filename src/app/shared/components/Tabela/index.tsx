@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { ITabelaPropriedadesProps, ObjetoMapeado } from "../../global/interface"
 import type { TTipoAcaoTabela } from "../../global/types";
 import { AgrupamentoAcoes, TabelaStyle, TBody, Td, Th, THead, Trow } from "./style";
@@ -10,17 +11,27 @@ interface ITabelaProps {
     tabelaProps: ITabelaPropriedadesProps[];
     dados: ObjetoMapeado[];
     acaoDaTabela: (dado: ObjetoMapeado, tipo: TTipoAcaoTabela) => Promise<any> | any;
+    chaveLinhaSelecionado?: string;
 }
 
 export const Tabela = ({
     dados,
     tabelaProps,
-    acaoDaTabela
+    acaoDaTabela,
+    chaveLinhaSelecionado = ""
 }: ITabelaProps) => {
+
+    const [
+        linhaSelecionada,
+        setLinhaSelecionada,
+    ] = useState<number | null>(null)
+
     return(
         <TabelaStyle>
             <THead>
-                <Trow>
+                <Trow
+                    onClick={() => setLinhaSelecionada(null)}
+                >
                     {tabelaProps.map((row) => (
                         <Th>{ row.valor }</Th>
                     ))}
@@ -28,10 +39,13 @@ export const Tabela = ({
             </THead>
             <TBody>
                 {dados.map((dado) => (
-                    <Trow>
+                    <Trow
+                        onClick={() => setLinhaSelecionada(dado[chaveLinhaSelecionado])}
+                    >
                         {tabelaProps.map((row) => (
                             <Td 
                                 $alinhamento={row.propriedades?.alinhamento}
+                                $selecionado={Number(dado[chaveLinhaSelecionado]) === linhaSelecionada}
                             >
                                 {row.chave === "acoes"
                                     ?

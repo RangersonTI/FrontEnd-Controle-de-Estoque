@@ -2,6 +2,7 @@ import { Agrupamento } from "../../../../shared/components/Agrupamento";
 import { Botao } from "../../../../shared/components/Botao";
 import { Modal } from "../../../../shared/components/Modal";
 import { useMarcaContext } from "../../../../shared/hooks/useMarcaContext";
+import { useModalAnimationContext } from "../../../../shared/hooks/useModalAnimationContext";
 import { useMarca } from "../../hooks/useMarca";
 import { Descricao } from "./style";
 
@@ -17,9 +18,19 @@ export const ModalConfirmarExclusaoMarca = () => {
         handleFecharModal
     } = useMarca();
 
+    const {
+        REF,
+        STATE,
+        handleMouseMoveDown
+    } = useModalAnimationContext();
+
     return(
-      <Modal.Root>
-        <Modal.Header 
+      <Modal.Root
+            ref={REF.modalRootRef}
+            posicaoModal={STATE.posicaoModal}
+      >
+        <Modal.Header
+            onMouseDown={handleMouseMoveDown}
             fechar={handleFecharModal}
             titulo="Exclusão de Marca"
         />

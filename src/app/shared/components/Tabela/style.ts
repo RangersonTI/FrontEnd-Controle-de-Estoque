@@ -1,8 +1,9 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { containerFlexInRowCenter } from "../../global/style/mixins";
 
 interface ITdProps {
     $alinhamento?: "left" | "right" | "center"
+    $selecionado: boolean;
 }
 
 export const TabelaStyle = styled.table`
@@ -17,6 +18,11 @@ export const Td = styled.td<ITdProps>`
     color: var(--marrom);
     font-weight: 600;
     text-align: ${p => p.$alinhamento ?? "center"};
+
+    ${p => p.$selecionado && css`
+        background-color: var(--marrom);
+        color: var(--beje);
+    `}
 `
 
 export const Trow = styled.tr`

@@ -3,6 +3,7 @@ import { Botao } from "../../../../shared/components/Botao";
 import { Input } from "../../../../shared/components/Input";
 import { Modal } from "../../../../shared/components/Modal";
 import { Select } from "../../../../shared/components/Select";
+import { useModalAnimationContext } from "../../../../shared/hooks/useModalAnimationContext";
 import {
     useMovimentacoesContext
 } from "../../../../shared/hooks/useMovimentacoesContext";
@@ -23,9 +24,19 @@ export const ModalFormularioMovimentacao = () => {
         handleRealizarMovimentacaoEstoque
     } = useMovimentacoes();
 
+    const {
+        REF,
+        STATE,
+        handleMouseMoveDown
+    } = useModalAnimationContext();
+
     return(
-        <Modal.Root>
+        <Modal.Root
+            ref={REF.modalRootRef}
+            posicaoModal={STATE.posicaoModal}
+        >
             <Modal.Header
+                onMouseDown={handleMouseMoveDown}
                 fechar={handleFecharFormulario}
                 titulo="Movimentação de Estoque"
             />

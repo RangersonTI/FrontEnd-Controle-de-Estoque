@@ -1,6 +1,7 @@
 import { Botao } from "../../../../shared/components/Botao";
 import { Input } from "../../../../shared/components/Input";
 import { Modal } from "../../../../shared/components/Modal";
+import { useModalAnimationContext } from "../../../../shared/hooks/useModalAnimationContext";
 import { useTiposDeProdutoContext } from "../../../../shared/hooks/useTiposDeProdutoContext";
 import { useTiposDeProduto } from "../../hook/useTiposDeProduto";
 
@@ -18,9 +19,19 @@ export const ModalCadastroTipoDeProduto = () => {
         formularioTiposDeProduto
     } = useTiposDeProdutoContext();
 
+    const {
+        REF,
+        STATE,
+        handleMouseMoveDown
+    } = useModalAnimationContext();
+
     return(
-        <Modal.Root>
+        <Modal.Root
+            ref={REF.modalRootRef}
+            posicaoModal={STATE.posicaoModal}
+        >
             <Modal.Header
+                onMouseDown={handleMouseMoveDown}
                 fechar={handleFecharModal}
                 titulo={MEMO.tituloModalFormulario}
             />

@@ -47,6 +47,7 @@ export const UnidadeDeMedida = () => {
                     dados={STATE.unidadesDeMedida}
                     tabelaProps={TabelaUnidadesDeMedida}
                     acaoDaTabela={handleAcaoDaTabela}
+                    chaveLinhaSelecionado="CodUnidadeDeMedida"
                 />
             </ContainerGlobal>
 

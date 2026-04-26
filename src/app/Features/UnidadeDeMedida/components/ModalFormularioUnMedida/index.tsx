@@ -1,6 +1,7 @@
 import { Botao } from "../../../../shared/components/Botao";
 import { Input } from "../../../../shared/components/Input";
 import { Modal } from "../../../../shared/components/Modal";
+import { useModalAnimationContext } from "../../../../shared/hooks/useModalAnimationContext";
 import { useUnidadesDeMedidaContext } from "../../../../shared/hooks/useUnidadesDeMedidaContext";
 import { useUnidadeDeMedida } from "../../hook/useUnidadeDeMedida";
 
@@ -18,9 +19,19 @@ export const ModalFormularioUnMedida = () => {
         formularioUnMedida
     } = useUnidadesDeMedidaContext();
 
+    const {
+        REF,
+        STATE,
+        handleMouseMoveDown
+    } = useModalAnimationContext();
+
     return(
-        <Modal.Root>
+        <Modal.Root
+            ref={REF.modalRootRef}
+            posicaoModal={STATE.posicaoModal}
+        >
             <Modal.Header
+                onMouseDown={handleMouseMoveDown}
                 fechar={handleFecharModal}
                 titulo={MEMO.tituloModalFormulario}
             />

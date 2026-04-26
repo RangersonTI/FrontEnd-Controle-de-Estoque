@@ -198,8 +198,6 @@ export const useProduto = () => {
         }
     }
 
-    
-
     useEffect(
         () => {
             handleObterProdutosCadastrados();

@@ -1,18 +1,22 @@
 import { IoIosClose } from "react-icons/io";
 import { BotaoFechar, HeaderModalStyle } from "../style";
+import type { HTMLAttributes } from "react";
 
-interface IHeaderModalProps {
+interface IHeaderModalProps extends HTMLAttributes<HTMLDivElement> {
     titulo: string;
     fechar: () => void;
 }
 
 export const HeaderModal = ({
     titulo,
-    fechar
+    fechar,
+    ...rest
 }: IHeaderModalProps) => {
 
     return(
-        <HeaderModalStyle>
+        <HeaderModalStyle
+            { ...rest }
+        >
             { titulo }
             <BotaoFechar onClick={fechar}>
                 <IoIosClose />

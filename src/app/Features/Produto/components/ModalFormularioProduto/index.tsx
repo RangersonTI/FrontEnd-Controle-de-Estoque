@@ -2,6 +2,7 @@ import { Botao } from "../../../../shared/components/Botao";
 import { Input } from "../../../../shared/components/Input";
 import { Modal } from "../../../../shared/components/Modal";
 import { Select } from "../../../../shared/components/Select";
+import { useModalAnimationContext } from "../../../../shared/hooks/useModalAnimationContext";
 import { useProdutosContext } from "../../../../shared/hooks/useProdutoContext";
 import { useProduto } from "../../hook/useProduto";
 
@@ -16,13 +17,23 @@ export const ModalFormularioProduto = () => {
     } = useProduto();
 
     const {
+        REF,
+        STATE,
+        handleMouseMoveDown
+    } = useModalAnimationContext();
+
+    const {
         formularioProduto
     } = useProdutosContext();
 
     return(
-        <Modal.Root>
+        <Modal.Root
+            ref={REF.modalRootRef}
+            posicaoModal={STATE.posicaoModal}
+        >
             <Modal.Header
                 fechar={handleFecharFormulario}
+                onMouseDown={handleMouseMoveDown}
                 titulo={MEMO.tituloFormularioProduto}
             />
 

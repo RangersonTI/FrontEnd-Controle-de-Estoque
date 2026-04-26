@@ -5,6 +5,11 @@ export interface IContainerModalStyleProps {
     $gapEntreItens?: string
 }
 
+export interface IRootModalStyleProps {
+    $posicaoEsquerda?: number | null;
+    $posicaoTopo?: number | null;
+}
+
 export const HeaderModalStyle = styled.div`
     width: 100%;
     text-align: center;
@@ -34,7 +39,10 @@ export const BotaoFechar = styled.button`
     top: 0;
 `;
 
-export const RootModalStyle = styled.div`
+export const RootModalStyle = styled.div<IRootModalStyleProps>`
+    position: absolute;
+    left: ${p => p.$posicaoEsquerda}px;
+    top: ${p => p.$posicaoTopo}px;
     max-width: 50%;
     min-width: 300px;
     min-height: 200px;

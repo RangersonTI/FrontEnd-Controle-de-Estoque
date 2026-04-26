@@ -46,6 +46,7 @@ export const Produto = () => {
                     dados={STATE.produtos}
                     tabelaProps={TabelaProdutos}
                     acaoDaTabela={handleAcaoDaTabela}
+                    chaveLinhaSelecionado="CodProd"
                 />
             </ContainerGlobal>
 

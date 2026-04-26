@@ -52,6 +52,7 @@ export const Marca = () => {
                     dados={marcas}
                     tabelaProps={TabelaMarcas}
                     acaoDaTabela={handleAcaoTabela}
+                    chaveLinhaSelecionado="CodMarca"
                 />
             </ContainerGlobal>
 
