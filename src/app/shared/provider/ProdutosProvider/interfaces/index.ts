@@ -5,3 +5,8 @@ export interface IFormularioProduto {
     codUnidadeDeMedida: number;
     codTipoProduto: number;
 }
+
+export interface IFormularioVariacoesProduto {
+    descricao: string;
+    sequencial: number;
+}

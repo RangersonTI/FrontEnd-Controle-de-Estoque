@@ -27,7 +27,7 @@ export const BotaoStyled = styled.button<IBotaoStyledProps>`
 
     ${p => p.$tipoBotao === "normal" && css`
         gap: 5px;
-        padding: 0 0.6rem;
+        padding: 0 1rem;
     `}
 
     ${p => p.$isLoading && css`

@@ -43,3 +43,14 @@ export const TabelaProdutos: ITabelaPropriedadesProps[] = [
         valor: "Ações"
     },
 ];
+
+export const TabelaVariacoesProduto: ITabelaPropriedadesProps[] = [
+    {
+        chave: "sequencial",
+        valor: "ID"
+    },
+    {
+        chave: "descricao",
+        valor: "Descrição"
+    }
+]

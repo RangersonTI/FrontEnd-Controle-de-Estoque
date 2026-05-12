@@ -1,6 +1,6 @@
-import { createContext, useState, type ReactNode } from "react";
+import React, { createContext, useState, type ReactNode } from "react";
 import type { IProdutosData } from "../../services/interfaces/Produtos";
-import type { IFormularioProduto } from "./interfaces";
+import type { IFormularioProduto, IFormularioVariacoesProduto } from "./interfaces";
 import { ProdutosController } from "../../services/ProdutosController";
 import { Notificar } from "../../Utils/Notificar";
 
@@ -24,6 +24,11 @@ export interface IProdutosContextData {
         React.SetStateAction<IProdutosData>
     >;
 
+    formularioVariacoesProduto: IFormularioVariacoesProduto[];
+    setFormularioVariacoesProduto: React.Dispatch<
+        React.SetStateAction<IFormularioVariacoesProduto[]>
+    >;
+
     handleObterProdutosCadastrados: () => Promise<void>;
 }
 
@@ -42,6 +47,11 @@ function ProdutosProvider({
         formularioProduto,
         setFormularioProduto,
     ] = useState({} as IFormularioProduto);
+
+    const [
+        formularioVariacoesProduto,
+        setFormularioVariacoesProduto,
+    ] = useState<IFormularioVariacoesProduto[]>([]);
 
     const [
         produtoSelecionado,
@@ -70,6 +80,9 @@ function ProdutosProvider({
 
                 produtoSelecionado,
                 setProdutoSelecionado,
+
+                formularioVariacoesProduto,
+                setFormularioVariacoesProduto,
 
                 handleObterProdutosCadastrados,
             }}

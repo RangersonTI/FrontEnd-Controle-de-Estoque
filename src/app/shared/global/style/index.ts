@@ -8,7 +8,8 @@ export const GlobalStyle = createGlobalStyle`
         --marrom-escuro: #6D4C41;
         --verde: #8BC34A;
         --vermelho: #e76c6c;
-        --beje: #FAF3E0;
+        /* --beje: #FAF3E0; */
+        --beje: #faf2db;
         --beje-opc-80: #FAF3E080;
         --branco: #fff;
         --fonte-padrao: #222;
@@ -54,6 +55,7 @@ export const GlobalStyle = createGlobalStyle`
         border: none;
         outline: none;
         color: var(--fonte-padrao);
+        accent-color: var(--marrom);
     }
 
     button {

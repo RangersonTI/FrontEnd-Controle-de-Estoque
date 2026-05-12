@@ -4,6 +4,7 @@ interface IContainerInputProps {
     $width?: string;
     $heigth?: string;
     $labelSuspensa?: boolean;
+    $ehCheckBox?: boolean;
 }
 
 export const ContainerInput = styled.div<IContainerInputProps>`
@@ -11,11 +12,25 @@ export const ContainerInput = styled.div<IContainerInputProps>`
     width: ${p => p.$width ?? "100%"};
     height: ${p => p.$heigth ?? "36px"};
 
-    ${p => p.$labelSuspensa && css`
+    ${p => p.$labelSuspensa && !p.$ehCheckBox && css`
         label {
             top: -15px;
             left: 2px;
             transform: translate(-0px, -4px);
+        }
+    `}
+
+    ${p => p.$ehCheckBox && css`
+        display: flex;
+        flex-direction: row;
+        gap: 5px;
+        align-items: center;
+        justify-items: center;
+        vertical-align: center;
+
+        input {
+            width: 20px;
+            height: 20px;
         }
     `}
 `;
@@ -33,11 +48,14 @@ export const InputStyled = styled.input`
 
 export const LabelFlutuante = styled.label<IContainerInputProps>`
     font-family: var(--inter);
-    position: absolute;
-    left: 15px;
-    transform: translateY(50%);
     user-select: none;
     font-weight: 600;
     font-size: 14px;
-    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    ${p => !p.$ehCheckBox && css`
+        position: absolute;
+        left: 15px;
+        transform: translateY(50%);
+        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    `}
 `;

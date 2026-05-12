@@ -24,6 +24,9 @@ export const useProduto = () => {
 
         produtoSelecionado,
         setProdutoSelecionado,
+
+        setFormularioVariacoesProduto,
+
         handleObterProdutosCadastrados
     } = useProdutosContext();
 
@@ -53,9 +56,19 @@ export const useProduto = () => {
     ] = useState("");
 
     const [
+        descricaoVariacao,
+        setDescricaoVariacao
+    ] = useState("");
+
+    const [
         estaSalvandoFormulario,
         salvandoFormulario
     ] = useTransition();
+
+    const [
+        flagPossuiVariacao,
+        setFlagPossuiVariacao,
+    ] = useState(false);
 
     const tituloFormularioProduto = useMemo(
         () => 
@@ -112,6 +125,19 @@ export const useProduto = () => {
             ...fp,
             [name] : value
         }));
+    }
+
+    const handleAdicionarNovaVariacaoLista = () => {
+        setFormularioVariacoesProduto(f => ([
+            ...f,
+            {
+                descricao: descricaoVariacao,
+                sequencial: f.length
+            }
+        ]));
+
+
+        setDescricaoVariacao("");
     }
 
     const handleFecharFormulario = () => {
@@ -214,6 +240,12 @@ export const useProduto = () => {
 
             produtos,
             setProdutos,
+            
+            flagPossuiVariacao,
+            setFlagPossuiVariacao,
+
+            descricaoVariacao,
+            setDescricaoVariacao,
         },
         MEMO: {
             tituloFormularioProduto,
@@ -228,6 +260,7 @@ export const useProduto = () => {
         handleChangeValue,
         handleAcaoDaTabela,
         handleSalvarFormulario,
-        handleFecharFormulario
+        handleFecharFormulario,
+        handleAdicionarNovaVariacaoLista
     };
 }

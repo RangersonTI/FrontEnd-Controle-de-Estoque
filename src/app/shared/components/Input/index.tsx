@@ -26,6 +26,8 @@ export const Input = ({
     return(
         <ContainerInput
             $labelSuspensa={STATE.inputEstaFocada || handleValueEhValido(String(value))}
+            $ehCheckBox={rest.type === "checkbox"}
+
         >
             <InputStyled
                 onBlur={() => STATE.setInputEstaFocada(false)}
@@ -36,7 +38,9 @@ export const Input = ({
                 autoComplete="off"
                 {...rest}
             />
-            <LabelFlutuante >
+            <LabelFlutuante
+                $ehCheckBox={rest.type === "checkbox"}
+            >
                 { label }
             </LabelFlutuante>
         </ContainerInput>
