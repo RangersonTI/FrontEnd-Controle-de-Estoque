@@ -11,12 +11,16 @@ interface IBotaoProps extends HTMLAttributes<HTMLButtonElement>{
     isFlex?: boolean;
     corInversa?: boolean;
     Icone?: ElementType;
+    corBotao?: string;
+    corBotaoHover?: string;
 }
 
 export const Botao = ({
     tipoBotao = "normal",
     Icone,
     descricao,
+    corBotao,
+    corBotaoHover,
     isLoading = false,
     isDisabled = false,
     isFlex = false,
@@ -30,6 +34,8 @@ export const Botao = ({
             $isFlex={isFlex}
             $corInversa={corInversa}
             disabled={isDisabled}
+            $corBotao={corBotao}
+            $corBotaoHover={corBotaoHover}
             {...rest}
         >   
             {isLoading

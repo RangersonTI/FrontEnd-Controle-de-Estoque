@@ -6,7 +6,8 @@ export const GlobalStyle = createGlobalStyle`
         /**CORES */
         --marrom: #8D6E63;
         --marrom-escuro: #6D4C41;
-        --verde: #8BC34A;
+        --verde: #80b840;
+        --verde-escuro: #588d1b;
         --vermelho: #e76c6c;
         /* --beje: #FAF3E0; */
         --beje: #faf2db;

@@ -1,1 +1,4 @@
-export type TModalProduto = "ModalFormularioProduto" | "ModalCofirmaExclusaoProduto"
+export type TModalProduto = 
+    "ModalFormularioProduto"
+    | "ModalCofirmaExclusaoProduto"
+    | "ModalGerenciamentoVariacaoProduto"; 

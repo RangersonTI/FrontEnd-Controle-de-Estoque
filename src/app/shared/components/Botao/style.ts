@@ -6,10 +6,12 @@ interface IBotaoStyledProps {
     $isLoading?: boolean;
     $isFlex?: boolean;
     $corInversa?: boolean;
+    $corBotao?: string;
+    $corBotaoHover?: string;
 }
 
 export const BotaoStyled = styled.button<IBotaoStyledProps>`
-    background-color: var(--marrom);
+    background-color: ${p => p.$corBotao ?? "var(--marrom)"};
     color: var(--beje);
     min-width: 36px;
     min-height: 36px;
@@ -57,6 +59,6 @@ export const BotaoStyled = styled.button<IBotaoStyledProps>`
     }
 
     &:hover {
-        background-color: var(--marrom-escuro);
+        background-color: ${p =>  p.$corBotaoHover ?? "var(--marrom-escuro)"};
     }
 `;

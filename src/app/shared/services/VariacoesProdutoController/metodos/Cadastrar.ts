@@ -1,5 +1,6 @@
 import { Api } from "../../Api";
 import { ApiException } from "../../ApiException"
+import type { IVariacoesProdutoData } from "../../interfaces/VariacoesProduto";
 
 
 export interface IVariacoesProdutoProps{
@@ -7,9 +8,11 @@ export interface IVariacoesProdutoProps{
   CodProd: number;
 }
 
-export const Cadastrar = async(body: IVariacoesProdutoProps) => {
+export const Cadastrar = async(body: IVariacoesProdutoProps): Promise<IVariacoesProdutoData> => {
     try {
-       await  Api.post(`/variacoes-produto`, body);
+       const { data } = await  Api.post(`/variacoes-produto`, body);
+       
+       return data;
     } 
     catch (error) {
         throw new ApiException(

@@ -6,6 +6,10 @@ interface ITdProps {
     $selecionado: boolean;
 }
 
+interface ITHeadProps {
+    $corHeaderInverso?: boolean;
+}
+
 export const TabelaStyle = styled.table`
     width: 100%;
     background-color: var(--beje);
@@ -37,9 +41,15 @@ export const Th = styled.th`
     user-select: none;
 `
 
-export const THead = styled.thead`
+export const THead = styled.thead<ITHeadProps>`
     th {
         background-color: var(--marrom);
+
+        ${p => p.$corHeaderInverso && css`
+            background-color: var(--beje);
+            color: var(--marrom);
+            border: 1px solid var(--marrom);
+        `}
     }
 `
 

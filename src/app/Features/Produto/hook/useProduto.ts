@@ -25,8 +25,6 @@ export const useProduto = () => {
         produtoSelecionado,
         setProdutoSelecionado,
 
-        setFormularioVariacoesProduto,
-
         handleObterProdutosCadastrados
     } = useProdutosContext();
 
@@ -115,6 +113,18 @@ export const useProduto = () => {
         ,[unidadesDeMedida]
     );
 
+    const estaCadastrandoNovoProduto = useMemo(
+        () => !produtoSelecionado.CodProd || produtoSelecionado.CodProd === 0
+        ,[produtoSelecionado]
+    );
+
+    //! Habilita o botão de adicionar variação somente se um produto já tiver sido cadastrado ou selecionado para edição.
+    const botaoAdicionarVariacaoEstaHabilitado = useMemo(
+        () => 
+            produtoSelecionado.CodProd && produtoSelecionado.CodProd > 0
+        ,[produtoSelecionado]
+    );
+
     const handleChangeValue = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { value, name } = e.target;
 
@@ -125,19 +135,6 @@ export const useProduto = () => {
             ...fp,
             [name] : value
         }));
-    }
-
-    const handleAdicionarNovaVariacaoLista = () => {
-        setFormularioVariacoesProduto(f => ([
-            ...f,
-            {
-                descricao: descricaoVariacao,
-                sequencial: f.length
-            }
-        ]));
-
-
-        setDescricaoVariacao("");
     }
 
     const handleFecharFormulario = () => {
@@ -155,6 +152,7 @@ export const useProduto = () => {
         switch(tipo) {
             case "editar":
                 setFormularioProduto({
+                    variacaoInicial: "",
                     codMarca: produto.CodMarca,
                     codTipoProduto: produto.CodTipoProduto,
                     codUnidadeDeMedida: produto.CodUnidadeDeMedida,
@@ -174,17 +172,17 @@ export const useProduto = () => {
     }
 
     const handleSalvarFormulario = () => {
-        try {
 
-            const {
-                codMarca,
-                codTipoProduto,
-                codUnidadeDeMedida,
-                descricao
-            } = formularioProduto;
+        const {
+            codMarca,
+            codTipoProduto,
+            codUnidadeDeMedida,
+            descricao,
+            variacaoInicial
+        } = formularioProduto;
 
-            salvandoFormulario(async() => {
-
+        salvandoFormulario(async() => {
+            try {
                 if(produtoSelecionado.CodProd){
                     const produtoEditado = await ProdutosController.Editar({
                         CodProd: produtoSelecionado.CodProd,
@@ -208,7 +206,8 @@ export const useProduto = () => {
                         CodMarca: codMarca,
                         CodTipoProduto: codTipoProduto,
                         CodUnidadeDeMedida: codUnidadeDeMedida,
-                        Descricao: descricao
+                        Descricao: descricao,
+                        VariacaoInicial: variacaoInicial
                     });
 
                     setProdutos(p => ([...p, produtoCadastrado]));
@@ -216,13 +215,15 @@ export const useProduto = () => {
                     Notificar.Sucesso("Produto cadastrado com sucesso!");
                 }
 
-                handleFecharFormulario();
-            })
-        } 
-        catch (error) {
-            Notificar.ErrorApi(error);    
-        }
+                // handleFecharFormulario();
+            } catch (error) {
+                Notificar.ErrorApi(error);
+            }
+        })
     }
+
+    const handleGerenciarVariacoesProduto = () =>
+        abrirModal("ModalGerenciamentoVariacaoProduto");
 
     useEffect(
         () => {
@@ -253,6 +254,8 @@ export const useProduto = () => {
             marcaFormatoSelect,
             tipoDeProdutoFormatoSelect,
             unidadesDeMedidaFormatoSelect,
+            botaoAdicionarVariacaoEstaHabilitado,
+            estaCadastrandoNovoProduto
         },
         TRANSITION: {
             estaSalvandoFormulario
@@ -261,6 +264,6 @@ export const useProduto = () => {
         handleAcaoDaTabela,
         handleSalvarFormulario,
         handleFecharFormulario,
-        handleAdicionarNovaVariacaoLista
+        handleGerenciarVariacoesProduto
     };
 }

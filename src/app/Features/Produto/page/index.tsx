@@ -10,6 +10,7 @@ import { useModalContext } from "../../../shared/hooks/useModalContext";
 import type { TModalProduto } from "../types";
 import { ModalFormularioProduto } from "../components/ModalFormularioProduto";
 import { useProduto } from "../hook/useProduto";
+import { ModalGerenciamentoVariacoesProduto } from "../components/ModalGerenciamentoVariacoesProduto/index.tsx";
 
 export const Produto = () => {
 
@@ -51,6 +52,8 @@ export const Produto = () => {
             </ContainerGlobal>
 
             {modalAberta("ModalFormularioProduto") && <ModalFormularioProduto/>}
+
+            {modalAberta("ModalGerenciamentoVariacaoProduto") && <ModalGerenciamentoVariacoesProduto />}
         </>
     );
 }

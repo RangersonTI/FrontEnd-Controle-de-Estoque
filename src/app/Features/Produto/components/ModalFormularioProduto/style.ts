@@ -1,7 +1,9 @@
 import styled from "styled-components";
 
 export const ContainerFormulario = styled.div`
-    width: 540px;
+    width: 100%;
+    min-width: 450px;
+    max-width: 550px;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;

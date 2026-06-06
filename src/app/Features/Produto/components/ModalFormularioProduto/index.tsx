@@ -4,25 +4,20 @@ import { Espacador } from "../../../../shared/components/Espacador";
 import { Input } from "../../../../shared/components/Input";
 import { Modal } from "../../../../shared/components/Modal";
 import { Select } from "../../../../shared/components/Select";
-import { Tabela } from "../../../../shared/components/Tabela";
-import { Titulo } from "../../../../shared/components/Titulo";
 import { useModalAnimationContext } from "../../../../shared/hooks/useModalAnimationContext";
 import { useProdutosContext } from "../../../../shared/hooks/useProdutoContext";
-import { Converter } from "../../../../shared/Utils/Converter";
 import { useProduto } from "../../hook/useProduto";
-import { TabelaVariacoesProduto } from "../../table/columns";
 import { ContainerFormulario, FormularioVariacoesProduto, VaricaoDescricao } from "./style";
 
 export const ModalFormularioProduto = () => {
 
     const {
         MEMO,
-        STATE: STATEPRODUTO,
         TRANSITION,
         handleChangeValue,
         handleSalvarFormulario,
         handleFecharFormulario,
-        handleAdicionarNovaVariacaoLista
+        handleGerenciarVariacoesProduto
     } = useProduto();
 
     const {
@@ -58,14 +53,26 @@ export const ModalFormularioProduto = () => {
                         autoFocus
                     />
 
-                    <Agrupamento>
-                        <Select
-                            name="codMarca"
-                            label="Marca"
-                            onChange={handleChangeValue}
-                            opcoes={MEMO.marcaFormatoSelect}
-                            value={formularioProduto.codMarca}
-                        />
+                    {/* <Agrupamento> */}
+                        <Agrupamento>
+                            {MEMO.estaCadastrandoNovoProduto &&
+                                <Input
+                                    name="variacaoInicial"
+                                    label="Variação (inicial)"
+                                    onChange={handleChangeValue}
+                                    value={formularioProduto.variacaoInicial}
+                                    autoFocus
+                                />
+                            }
+
+                            <Select
+                                name="codMarca"
+                                label="Marca"
+                                onChange={handleChangeValue}
+                                opcoes={MEMO.marcaFormatoSelect}
+                                value={formularioProduto.codMarca}
+                            />
+                        </Agrupamento>
 
                         <Select
                             name="codTipoProduto"
@@ -82,9 +89,9 @@ export const ModalFormularioProduto = () => {
                             opcoes={MEMO.unidadesDeMedidaFormatoSelect}
                             value={formularioProduto.codUnidadeDeMedida}
                         />
-                    </Agrupamento>
+                    {/* </Agrupamento> */}
 
-                    <Input
+                    {/* <Input
                         name=""
                         label="Produto com Variação"
                         onChange={(e) => 
@@ -95,11 +102,11 @@ export const ModalFormularioProduto = () => {
                         }
                         type="checkbox"
                         autoFocus
-                    />
+                    /> */}
 
                 </ContainerFormulario>
 
-                {STATEPRODUTO.flagPossuiVariacao &&
+                {/* {STATEPRODUTO.flagPossuiVariacao &&
                     <FormularioVariacoesProduto>
                         <VaricaoDescricao>Variação</VaricaoDescricao>
 
@@ -128,7 +135,7 @@ export const ModalFormularioProduto = () => {
                             
                         />
                     </FormularioVariacoesProduto>
-                }
+                } */}
 
                 <Botao
                     descricao={MEMO.descricaoBotaoFormulario}
@@ -136,6 +143,17 @@ export const ModalFormularioProduto = () => {
                     isLoading={TRANSITION.estaSalvandoFormulario}
                     onClick={handleSalvarFormulario}
                 />
+
+                {MEMO.botaoAdicionarVariacaoEstaHabilitado &&
+                    <Botao
+                        descricao="Gerenciar Variações"
+                        isDisabled={TRANSITION.estaSalvandoFormulario}
+                        isLoading={TRANSITION.estaSalvandoFormulario}
+                        onClick={handleGerenciarVariacoesProduto}
+                        corBotao="var(--verde)"
+                        corBotaoHover="var(--verde-escuro)"
+                    />
+                }
             </Modal.Container>
         </Modal.Root>
     );

@@ -3,7 +3,7 @@ import { ApiException } from "../../ApiException"
 import type { IProdutosData } from "../../interfaces/Produtos";
 import type { ICadastroProdutoProps } from "./Cadastrar";
 
-interface IEditarProdutoProps extends ICadastroProdutoProps {
+interface IEditarProdutoProps extends Omit<ICadastroProdutoProps, "VariacaoInicial"> {
     CodProd: number;
 }
 

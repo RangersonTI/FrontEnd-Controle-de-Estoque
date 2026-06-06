@@ -7,6 +7,7 @@ export interface ICadastroProdutoProps {
     CodMarca: number;
     CodTipoProduto: number;
     CodUnidadeDeMedida: number;
+    VariacaoInicial: string;
 }
 
 export const Cadastrar = async(body: ICadastroProdutoProps): Promise<IProdutosData> => {

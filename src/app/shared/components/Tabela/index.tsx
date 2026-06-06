@@ -12,13 +12,17 @@ interface ITabelaProps {
     dados: ObjetoMapeado[];
     acaoDaTabela: (dado: ObjetoMapeado, tipo: TTipoAcaoTabela) => Promise<any> | any;
     chaveLinhaSelecionado?: string;
+    ocultarHeader?: boolean;
+    corHeaderInverso?: boolean;
 }
 
 export const Tabela = ({
     dados,
     tabelaProps,
     acaoDaTabela,
-    chaveLinhaSelecionado = ""
+    chaveLinhaSelecionado = "",
+    ocultarHeader = false,
+    corHeaderInverso = false,
 }: ITabelaProps) => {
 
     const [
@@ -28,15 +32,19 @@ export const Tabela = ({
 
     return(
         <TabelaStyle>
-            <THead>
-                <Trow
-                    onClick={() => setLinhaSelecionada(null)}
+            {!ocultarHeader &&
+                <THead
+                    $corHeaderInverso={corHeaderInverso}
                 >
-                    {tabelaProps.map((row) => (
-                        <Th>{ row.valor }</Th>
-                    ))}
-                </Trow>
-            </THead>
+                    <Trow
+                        onClick={() => setLinhaSelecionada(null)}
+                    >
+                        {tabelaProps.map((row) => (
+                            <Th>{ row.valor }</Th>
+                        ))}
+                    </Trow>
+                </THead>
+            }
             <TBody>
                 {dados.map((dado) => (
                     <Trow
