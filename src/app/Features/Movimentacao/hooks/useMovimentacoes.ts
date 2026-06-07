@@ -10,6 +10,7 @@ import { Formatar } from "../../../shared/Utils/Formatar";
 import { Notificar } from "../../../shared/Utils/Notificar";
 import { MovimentacoesController } from "../../../shared/services/MovimentacoesController";
 import type { IMovimentacoesEntradaEmAbertoData } from "../../../shared/services/MovimentacoesController/metodos/ObterMovimentacoesEntradaEmAberto";
+import { Validar } from "../../../shared/Utils/Validar";
 
 export const useMovimentacoes = () => {
     
@@ -20,8 +21,11 @@ export const useMovimentacoes = () => {
     } = useMovimentacoesContext();
 
     const {
+        produtos,
+        variacoesPorProduto,
+
         handleObterProdutosCadastrados,
-        produtos
+        handleObterVariacoesProdutoPeloCodProd
     } = useProdutosContext();
     
     const {
@@ -78,6 +82,16 @@ export const useMovimentacoes = () => {
         ]
     );
 
+    const variacoesPorProdutoSelectFormat: ISelectFormatProps[] = useMemo(
+        () => variacoesPorProduto.map(
+            v => (
+                {
+                    chave: v.Descricao,
+                    valor: String(v.CodVariacao)
+                } as ISelectFormatProps
+        )) ,[variacoesPorProduto]
+    );
+
     const handleChangeValues = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
 
         const { value, name } = e.target;
@@ -124,6 +138,7 @@ export const useMovimentacoes = () => {
                     await MovimentacoesController.Cadastrar({
                         CodMovimentacaoEntrada: Number(codMovimentacaoEntrada),
                         CodProd: Number(codProd),
+                        CodVariacaoProduto: Formatar.paraNumero(formularioMovimentacao.codVariacao),
                         DataArmazenagem: dataArmazenagem,
                         DataSaida: dataSaida,
                         Observacao: observacao,
@@ -147,7 +162,7 @@ export const useMovimentacoes = () => {
     const handleObterMovimentacoesRealizadas = async() => {
         try {
             const movimentacoes = await MovimentacoesController.Obter();
-
+            
             setMovimentacoesEstoque(movimentacoes);
         }
         catch (error) {
@@ -156,17 +171,31 @@ export const useMovimentacoes = () => {
     }
 
     const handleObterMoviventacoesDeEntradaEmAberto = async() => {
-
+        
         try {
             const movimentacoes = await MovimentacoesController.ObterMovimentacoesEntradaEmAberto(
-                Number(formularioMovimentacao.codProd)
+                Number(formularioMovimentacao.codProd),
+                Formatar.paraNumero(formularioMovimentacao.codVariacao)
             );
-
+            
             setMovimentacoesEntradaEmAberto(movimentacoes);
         }
         catch (error) {
             Notificar.ErrorApi(error);
         }
+    }
+
+    const handleBuscarVariacoesPeloProdutoSelecionado = async(codProd: number) => {
+
+        const variacoes = await handleObterVariacoesProdutoPeloCodProd(codProd);
+
+        // seleciona a variação automaticamente caso haja apenas uma variação para
+        // o produto selecionado
+        if(variacoes.length === 1)
+            setFormularioMovimentacao(mov => ({
+                ...mov,
+                codVariacao: String(variacoes[0].CodVariacao)
+            }));
     }
 
     useEffect(
@@ -179,15 +208,27 @@ export const useMovimentacoes = () => {
     useEffect(
         () => {
             if(
-                formularioMovimentacao.codProd &&
+                Validar.ehStringValida(formularioMovimentacao.codProd) &&
+                Validar.ehStringValida(formularioMovimentacao.codVariacao) &&
                 formularioMovimentacao.tipoMovimentacao === 2
             )
                 handleObterMoviventacoesDeEntradaEmAberto();
         },[
-            formularioMovimentacao.codProd,
-            formularioMovimentacao.tipoMovimentacao
+            formularioMovimentacao
         ]
     );
+
+
+
+    useEffect(
+        () => {
+            const codProdSelecionado = Formatar.paraNumero(formularioMovimentacao.codProd);
+
+            if(codProdSelecionado > 0)
+                handleBuscarVariacoesPeloProdutoSelecionado(codProdSelecionado);
+
+        } ,[formularioMovimentacao.codProd]
+    )
 
     return {
         STATE: {
@@ -196,8 +237,9 @@ export const useMovimentacoes = () => {
         },
         MEMO: {
             produtosSelectFormat,
+            variacoesPorProdutoSelectFormat,
             tiposMovimentacaoSelectFormat,
-            movimentacoesEntradaSelectFormat
+            movimentacoesEntradaSelectFormat,
         },
         TRANSITION: {
             estaRealizandoMovimentacao

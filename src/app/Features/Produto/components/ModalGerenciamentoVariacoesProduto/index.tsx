@@ -5,6 +5,7 @@ import { Input } from "../../../../shared/components/Input";
 import { Modal } from "../../../../shared/components/Modal";
 import { Tabela } from "../../../../shared/components/Tabela";
 import { useModalAnimationContext } from "../../../../shared/hooks/useModalAnimationContext";
+import { useProdutosContext } from "../../../../shared/hooks/useProdutoContext";
 import { useVariacoesProduto } from "../../hook/useVariacoesProduto";
 import { TabelaVariacoesProduto } from "../../table/columns";
 import { VariacoesContainer } from "./style";
@@ -17,6 +18,10 @@ export const ModalGerenciamentoVariacoesProduto = () => {
         STATE,
         handleMouseMoveDown,
     } = useModalAnimationContext();
+
+    const {
+        variacoesPorProduto
+    } = useProdutosContext();
 
     const {
         STATE: STATEVARIACOES,
@@ -43,7 +48,7 @@ export const ModalGerenciamentoVariacoesProduto = () => {
                 <VariacoesContainer>
                     <Tabela
                         acaoDaTabela={handleAcaoTabelaVariacoesProduto}
-                        dados={STATEVARIACOES.variacoesPorProduto}
+                        dados={variacoesPorProduto}
                         tabelaProps={TabelaVariacoesProduto}
                         // ocultarHeader
                         corHeaderInverso={true}

@@ -3,6 +3,7 @@ import { ApiException } from "../../ApiException";
 
 interface ICadastrarMovimentacaoProps {
   CodProd: number;
+  CodVariacaoProduto: number;
   TipoMovimentacao: number;
   CodMovimentacaoEntrada: number | null;
   QtdAMovimentar: number;

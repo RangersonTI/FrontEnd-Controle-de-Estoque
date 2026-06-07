@@ -16,7 +16,11 @@ export class ApiException {
                 response?.status === 400 ||
                 response?.status === 403 ||
                 response?.status === 404 ||
+                response?.status === 405 ||
+                response?.status === 415 ||
                 response?.status === 409 ||
+                response?.status === 422 ||
+                response?.status === 424 ||
                 response?.status === 500
             ) {
                 this.status = response.status;

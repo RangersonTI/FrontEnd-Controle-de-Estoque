@@ -53,6 +53,14 @@ export const ModalFormularioMovimentacao = () => {
 
                     <Agrupamento>
                         <Select
+                            name="codVariacao"
+                            label="Variação"
+                            onChange={handleChangeValues}
+                            opcoes={MEMO.variacoesPorProdutoSelectFormat}
+                            value={formularioMovimentacao.codVariacao}
+                        />
+
+                        <Select
                             name="tipoMovimentacao"
                             label="Tipo de Movimentação"
                             onChange={handleChangeValues}
@@ -60,33 +68,36 @@ export const ModalFormularioMovimentacao = () => {
                             value={formularioMovimentacao.tipoMovimentacao}
                         />
 
+                    </Agrupamento>
+
+                    <Agrupamento>
                         <Input
                             name="qtdAMovimentar"
                             label="Quantidade"
                             onChange={handleChangeValues}
                             value={formularioMovimentacao.qtdAMovimentar}
                         />
+
+                        {formularioMovimentacao.tipoMovimentacao === 1 &&
+                            <Input
+                                name="dataArmazenagem"
+                                label="Data de Armazenagem"
+                                onChange={handleChangeValues}
+                                value={formularioMovimentacao.dataArmazenagem}
+                                type="date"
+                            />
+                        }
+
+                        {formularioMovimentacao.tipoMovimentacao === 2 &&
+                            <Input
+                                name="dataSaida"
+                                label="Data de Saída"
+                                onChange={handleChangeValues}
+                                value={formularioMovimentacao.dataSaida}
+                                type="date"
+                            />
+                        }
                     </Agrupamento>
-
-                    {formularioMovimentacao.tipoMovimentacao === 1 &&
-                        <Input
-                            name="dataArmazenagem"
-                            label="Data de Armazenagem"
-                            onChange={handleChangeValues}
-                            value={formularioMovimentacao.dataArmazenagem}
-                            type="date"
-                        />
-                    }
-
-                    {formularioMovimentacao.tipoMovimentacao === 2 &&
-                        <Input
-                            name="dataSaida"
-                            label="Data de Saída"
-                            onChange={handleChangeValues}
-                            value={formularioMovimentacao.dataSaida}
-                            type="date"
-                        />
-                    }
 
                     {formularioMovimentacao.tipoMovimentacao === 2 &&
                         <Select

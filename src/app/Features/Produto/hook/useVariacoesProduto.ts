@@ -15,13 +15,10 @@ export const useVariacoesProduto = () => {
     } = useModalContext<TModalProduto>();
 
     const {
-        produtoSelecionado
+        produtoSelecionado,
+        setVariacoesPorProduto,
+        handleObterVariacoesProdutoPeloCodProd
     } = useProdutosContext();
-
-    const [
-        variacoesPorProduto,
-        setVariacoesPorProduto
-    ] = useState<IVariacoesProdutoData[]>([]);
 
     const [
         variacaoSelecionada,
@@ -35,20 +32,6 @@ export const useVariacoesProduto = () => {
 
     const handleFecharModalGerenciamentoVariacoesProduto = () => {
         fecharModal("ModalGerenciamentoVariacaoProduto");
-    }
-
-    const handleObterVariacoesPeloCodProd = async () => {
-        try {
-            const variacoes = await VariacoesProdutoController.Obter(
-                produtoSelecionado.CodProd
-            ); 
-
-            setVariacoesPorProduto(variacoes);
-
-        }
-        catch (error) {
-            Notificar.ErrorApi(error);
-        }
     }
 
     const handleAcaoTabelaVariacoesProduto = (dado: ObjetoMapeado, tipo: TTipoAcaoTabela) => {
@@ -104,13 +87,12 @@ export const useVariacoesProduto = () => {
 
     useEffect(
         () => {
-            handleObterVariacoesPeloCodProd();
+            handleObterVariacoesProdutoPeloCodProd();
         } ,[]
     )
     
     return {
         STATE: {
-            variacoesPorProduto,
             variacaoSelecionada,
             descricaoVariacao
         },
