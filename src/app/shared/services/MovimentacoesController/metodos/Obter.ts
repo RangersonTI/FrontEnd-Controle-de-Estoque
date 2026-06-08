@@ -5,12 +5,14 @@ export interface IMovimentacoesEstoqueData {
     CodMovimentacao: number;
     CodProd: number;
     Produto: string;
+    CodVariacaoProduto: number;
+    Variacao: string;
     DataMovimentacao: string;
     DataArmazenagem: string | null;
     DataSaida: string | null,
     TipoMovimentacao: string;
-    QtdMovimentacao: 5,
-    QtdRestante: 5,
+    QtdMovimentacao: number,
+    QtdRestante: number | null;
     TipoDeProduto: string;
 }
 

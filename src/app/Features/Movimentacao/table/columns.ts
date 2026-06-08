@@ -13,7 +13,14 @@ export const TabelaMovimentacoes: ITabelaPropriedadesProps[] = [
         }
     },
     {
-        valor: "T. Movimentação",
+        valor: "Variação",
+        chave: "Variacao",
+        propriedades: {
+            alinhamento: "left"
+        }
+    },
+    {
+        valor: "Tipo Mov.",
         chave: "TipoMovimentacao",
         propriedades: {
             alinhamento: "left"

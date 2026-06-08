@@ -1,13 +1,12 @@
 import { Agrupamento } from "../../../../shared/components/Agrupamento";
 import { Botao } from "../../../../shared/components/Botao";
-import { Espacador } from "../../../../shared/components/Espacador";
 import { Input } from "../../../../shared/components/Input";
 import { Modal } from "../../../../shared/components/Modal";
 import { Select } from "../../../../shared/components/Select";
 import { useModalAnimationContext } from "../../../../shared/hooks/useModalAnimationContext";
 import { useProdutosContext } from "../../../../shared/hooks/useProdutoContext";
 import { useProduto } from "../../hook/useProduto";
-import { ContainerFormulario, FormularioVariacoesProduto, VaricaoDescricao } from "./style";
+import { ContainerFormulario } from "./style";
 
 export const ModalFormularioProduto = () => {
 
